@@ -5,6 +5,7 @@ jQuery(document).ready(function () {
         $iframes.contents().find('#secondaryOpenFile').remove();
         if (JSINFO['plugin_pdfjs']['hide_download_button'] === 1) {
             $iframes.contents().find('#download').remove();
+			$iframes.contents().find('#downloadButton').remove();
             $iframes.contents().find('#secondaryDownload').remove();
         }
     }

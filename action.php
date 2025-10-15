@@ -8,7 +8,23 @@ class action_plugin_pdfjs extends DokuWiki_Action_Plugin {
      */
     public function register(Doku_Event_Handler $controller) {
         $controller->register_hook('DOKUWIKI_STARTED', 'AFTER', $this, 'add_jsinfo');
+		//add toolbar icon - jw
+		$controller->register_hook('TOOLBAR_DEFINE', 'AFTER', $this, 'pdfjsToolbar', array());
     }
+
+
+	//add toolbar icon -jw
+    public function pdfjsToolbar(&$event, $param) {
+        $event->data[] = array(
+            'type' => 'insert',
+            'title' => 'Insert PDF',
+            'icon' => '../../plugins/pdfjs/pdfjs.png',
+            'insert' => '{{pdfjs width,height > NS:FILE?ZoomLevel}}',
+            //'block' => false
+        );
+    }
+	 //add toolbar icon end -jw
+
 
     /**
      * @param Doku_Event $event
