@@ -135,12 +135,14 @@ class syntax_plugin_pdfjs extends DokuWiki_Syntax_Plugin {
     private function _html_embed_pdfjs($opts) {
         // make reference link
         $src = DOKU_BASE . 'lib/plugins/pdfjs/pdfjs/web/viewer.html';
-        $src .= '?file=' . ml($opts['id']);
+        // resolve the media ID to handle namespace properly
+        $mediaId = cleanID($opts['id']);
+        $src .= '?file=' . ml($mediaId);
         if($opts['display'] == 'tab') {
             $html = '<a href="' . $src . '" class="media mediafile mf_pdf"';
             $html .= 'target="_blank"';
             $html .= '>' . $opts['title'] . '</a>';
-			$html .= '<br><a href="' . ml($opts['id']) . '" class="media mediafile mf_pdf" title="' . $opts['id'] . '&nbsp;' . filesize_h(filesize(mediaFN($opts['id']))) . '">' . noNS($opts['id']) . '</a>';
+			$html .= '<br><a href="' . ml($mediaId) . '" class="media mediafile mf_pdf" title="' . $mediaId . '&nbsp;' . filesize_h(filesize(mediaFN($mediaId))) . '">' . noNS($mediaId) . '</a>';
         } else {
             if($opts['zoom']) $src .= '#zoom=' . $opts['zoom'];
             $html = '<iframe class="plugin__pdfjs" src="' . $src . '"';
@@ -149,10 +151,11 @@ class syntax_plugin_pdfjs extends DokuWiki_Syntax_Plugin {
             if($opts['height']) $html .= ' height: ' . $opts['height'] . ';';
             $html .= ' border: none;';
             $html .= '"></iframe>' . NL;
-			$html .= '<br><a href="' . ml($opts['id']) . '" class="media mediafile mf_pdf" title="' . $opts['id'] . '&nbsp;' . filesize_h(filesize(mediaFN($opts['id']))) . '">' . noNS($opts['id']) . '</a>';
+			$html .= '<br><a href="' . ml($mediaId) . '" class="media mediafile mf_pdf" title="' . $mediaId . '&nbsp;' . filesize_h(filesize(mediaFN($mediaId))) . '">' . noNS($mediaId) . '</a>';
         }
 
         return $html;
     }
+    
 
 }
